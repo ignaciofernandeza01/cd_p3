@@ -44,12 +44,28 @@ def seed_games():
             {"nombre":"Mario Kart 8 Deluxe","foto":"/mario_kart.jpg","link":"https://www.nintendo.com/es-es/Juegos/Juegos-de-Nintendo-Switch/Mario-Kart-8-Deluxe-1173281.html?srsltid=AfmBOoolVFlN4beu1igOeXTY36J6UbS4zqjW7IRZlG8JEOVBDT2oDD7a","descripcion":"Mario Kart 8 Deluxe es el juego de carreras arcade de Nintendo por excelencia. Compite en circuitos llenos de atajos y peligros, usa objetos icónicos para adelantar rivales y disfruta de modos para 1–4 jugadores en local u online. Incluye todo el contenido de MK8 y mejoras en jugabilidad y batalla.","popularidad":5,"trailer":"https://www.youtube.com/watch?v=tKlRN2YpxRE","categoria":"Deportes"},
             {"nombre":"Red Dead Redemption II","foto":"/red_dead_redemption_II.jpg","link":"https://www.rockstargames.com/reddeadredemption2","descripcion":"Red Dead Redemption II es una aventura de mundo abierto ambientada en el Lejano Oeste. Encarnas a Arthur Morgan, forajido de la banda de Van der Linde, en una historia madura con exploración, caza, tiroteos y un mundo vivo que reacciona a tus decisiones. Destaca por su narrativa, realismo y apartado técnico sobresaliente.","popularidad":4,"trailer":"https://www.youtube.com/watch?v=eaW0tYpxyp0","categoria":"Aventura"},
           ]
-      
+  
         for j in juegos:
-            db.add(Game(**j))
+            game = db.execute(
+                select(Game).where(Game.nombre == j["nombre"])
+            ).scalar_one_or_none()
+    
+            if game:
+                # 🔁 actualizar
+                for key, value in j.items():
+                    setattr(game, key, value)
+            else:
+                # ➕ crear
+                db.add(Game(**j))
+    
+        db.commit()
+        
+        print("✅ Seed actualizado")
+
 
         db.commit()
         print("✅ Seed insertado")
+
 
 
 
