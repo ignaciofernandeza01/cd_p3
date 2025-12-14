@@ -1,11 +1,12 @@
 flask==3.0.0
 flask-cors==4.0.0
 flask-jwt-extended==4.6.0
-SQLAlchemy==2.0.32
+sqlalchemy==2.0.32
+psycopg2==2.9.9
 python-dotenv==1.0.1
-psycopg[binary]
 werkzeug==3.0.3
 gunicorn
+
 
 
 
