@@ -6,6 +6,7 @@ from db import Base, engine
 from routes_auth import bp_auth
 from routes_games import bp_games
 import os
+from models import User, Game  # importa TODOS los modelos
 
 load_dotenv()
 
@@ -27,6 +28,7 @@ app = create_app()
 
 if __name__ == "__main__":
     Base.metadata.create_all(bind=engine)
+
 
 
 
