@@ -8,10 +8,13 @@ from models import Game
 bp_games = Blueprint("games", __name__, url_prefix="/games")
 
 def to_dict(g: Game):
+    foto = g.foto
+    if foto and foto.startswith("/public/"):
+        foto = foto.replace("/public/", "")
     return {
         "id": g.id,
         "nombre": g.nombre,
-        "foto": g.foto,
+        "foto": foto,
         "link": g.link,
         "descripcion": g.descripcion,
         "popularidad": g.popularidad,
@@ -92,3 +95,4 @@ def delete_game(game_id: int):
         db.delete(g)
         db.commit()
         return "", 204
+
