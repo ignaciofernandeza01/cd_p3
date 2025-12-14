@@ -10,8 +10,10 @@ import os
 load_dotenv()
 from db import engine, Base
 from models import User, Game
+from seed_games import seed_games
 
 Base.metadata.create_all(bind=engine)
+seed_games()
 def create_app():
     app = Flask(__name__)
     CORS(app)
@@ -30,6 +32,7 @@ app = create_app()
 
 if __name__ == "__main__":
     Base.metadata.create_all(bind=engine)
+
 
 
 
